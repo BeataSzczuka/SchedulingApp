@@ -60,7 +60,7 @@ public class DBInflater implements ApplicationListener<ContextRefreshedEvent> {
 
         courseRepository.save(course1);
         courseRepository.save(course2);
-        
+
         studentGroupRepository.save(group1);
         studentGroupRepository.save(group2);
 

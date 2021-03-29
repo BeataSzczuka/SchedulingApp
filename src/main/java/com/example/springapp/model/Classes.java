@@ -36,6 +36,15 @@ public class Classes {
         this.course = course;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
     public StudentGroup getStudentGroup() {
         return studentGroup;
     }
