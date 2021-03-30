@@ -16,8 +16,8 @@ public class TeacherCommandToTeacherConverter implements Converter<TeacherComman
             return null;
         }
         final Teacher teacher = new Teacher();
-        teacher.setFirstName(source.getFirstName());
-        teacher.setLastName(source.getLastName());
+//        teacher.setFirstName(source.getFirstName());
+//        teacher.setLastName(source.getLastName());
         return teacher;
     }
 }

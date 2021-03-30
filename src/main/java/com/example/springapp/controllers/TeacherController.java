@@ -34,12 +34,12 @@ public class TeacherController {
     }
 
     @RequestMapping("/teacher/{id}/classes")
-    public String getTeacherSongs(Model model, @PathVariable("id") Long id) {
+    public String getTeacherClasses(Model model, @PathVariable("id") Long id) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
 
         if (teacher.isPresent()) {
             model.addAttribute("classes", classesRepository.getAllByTeachersIsContaining(teacher.get()));
-            model.addAttribute("filter", "teacher: " + teacher.get().getFirstName() + " " + teacher.get().getLastName());
+      //      model.addAttribute("filter", "teacher: " + teacher.get().getFirstName() + " " + teacher.get().getLastName());
         } else {
             model.addAttribute("classes", new ArrayList<>());
             model.addAttribute("filter", "teacher for this id doesn't exist");
@@ -69,16 +69,17 @@ public class TeacherController {
 
     @PostMapping("teacher")
     public String saveOrUpdate(@ModelAttribute TeacherCommand command){
-        Optional<Teacher> teacherOptional = teacherRepository.getFirstByFirstNameAndLastName(command.getFirstName(), command.getLastName());
-
-        if (!teacherOptional.isPresent()) {
-            Teacher detachedTeacher = teacherCommandToTeacher.convert(command);
-            Teacher savedTeacher = teacherRepository.save(detachedTeacher);
-            return "redirect:/teacher/" + savedTeacher.getId() + "/show";
-        } else {
-            System.out.println("Sorry, there's such teacher in db");
-            return "redirect:/teacher/" + teacherOptional.get().getId() + "/show";
-        }
+   //     Optional<Teacher> teacherOptional = teacherRepository.getFirstByFirstNameAndLastName(command.getFirstName(), command.getLastName());
+//
+//        if (!teacherOptional.isPresent()) {
+//            Teacher detachedTeacher = teacherCommandToTeacher.convert(command);
+//            Teacher savedTeacher = teacherRepository.save(detachedTeacher);
+//            return "redirect:/teacher/" + savedTeacher.getId() + "/show";
+//        } else {
+//            System.out.println("Sorry, there's such teacher in db");
+//            return "redirect:/teacher/" + teacherOptional.get().getId() + "/show";
+//        }
+        return "redirect:/teacher/list";
     }
 
 }
