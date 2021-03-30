@@ -19,6 +19,6 @@ public class ClassesController {
 
         model.addAttribute("classes", classesRepository.findAll());
 
-        return "classes";
+        return "classes/classes";
     }
 }

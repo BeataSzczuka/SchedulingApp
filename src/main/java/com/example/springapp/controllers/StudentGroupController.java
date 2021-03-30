@@ -19,6 +19,6 @@ public class StudentGroupController {
 
         model.addAttribute("studentGroups", studentGroupRepository.findAll());
 
-        return "studentGroups";
+        return "studentGroups/studentGroups";
     }
 }

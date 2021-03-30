@@ -1,6 +1,5 @@
 package com.example.springapp.controllers;
 
-import com.example.springapp.repositories.ClassesRepository;
 import com.example.springapp.repositories.CourseRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +19,6 @@ public class CourseController {
 
         model.addAttribute("courses", courseRepository.findAll());
 
-        return "courses";
+        return "courses/courses";
     }
 }
