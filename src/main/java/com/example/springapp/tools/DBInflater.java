@@ -39,8 +39,15 @@ public class DBInflater implements ApplicationListener<ContextRefreshedEvent> {
         Teacher teacher1 = new Teacher("John", "Cash");
         Teacher teacher2 = new Teacher("Alan", "Watt");
 
-        StudentGroup group1 = new StudentGroup(1, "Computer science", "CS 1/A");
-        StudentGroup group2 = new StudentGroup(3, "Computer science", "CS 3/B");
+        StudentGroup group1 = new StudentGroup();
+        group1.setSemester(1);
+        group1.setGroupName("CS 1/A");
+        group1.setProgram("Computer Science");
+
+        StudentGroup group2 = new StudentGroup();
+        group2.setSemester(3);
+        group2.setGroupName("CS 3/A");
+        group2.setProgram("Computer Science");
 
         Course course1 = new Course();
         course1.setName("Computer Networks");

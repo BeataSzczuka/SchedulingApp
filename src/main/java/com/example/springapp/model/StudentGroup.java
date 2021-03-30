@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Data
-@EqualsAndHashCode(of = {"id"})
 @Entity
 public class StudentGroup {
     @Id
@@ -19,12 +18,4 @@ public class StudentGroup {
     private String program;
     private String groupName;
 
-    public StudentGroup() {
-    }
-
-    public StudentGroup(int semester, String program, String groupName) {
-        this.semester = semester;
-        this.program = program;
-        this.groupName = groupName;
-    }
 }
