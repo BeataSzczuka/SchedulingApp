@@ -49,14 +49,14 @@ public class DBInflater implements ApplicationListener<ContextRefreshedEvent> {
 
 
         LocalDateTime startTime = LocalDateTime.of(2021, 4, 8, 12, 00);
-//        Classes classes1 = new Classes(startTime, startTime.plusHours(2), "11", group1, course1);
-//        Classes classes2 = new Classes(startTime.plusDays(1), startTime.plusDays(1).plusHours(3), "11", group2, course2);
+        Classes classes1 = new Classes(startTime, startTime.plusHours(2), "11", group1, course1);
+        Classes classes2 = new Classes(startTime.plusDays(1), startTime.plusDays(1).plusHours(3), "11", group2, course2);
 
-//        classes1.getTeachers().add(teacher1);
-//        teacher1.getClasses().add(classes1);
-//
-//        classes2.getTeachers().add(teacher2);
-//        teacher2.getClasses().add(classes2);
+        classes1.getTeachers().add(teacher1);
+        teacher1.getClasses().add(classes1);
+
+        classes2.getTeachers().add(teacher2);
+        teacher2.getClasses().add(classes2);
 
         teacherRepository.save(teacher1);
         teacherRepository.save(teacher2);
@@ -67,8 +67,8 @@ public class DBInflater implements ApplicationListener<ContextRefreshedEvent> {
         studentGroupRepository.save(group1);
         studentGroupRepository.save(group2);
 
-//        classesRepository.save(classes1);
-//        classesRepository.save(classes2);
+        classesRepository.save(classes1);
+        classesRepository.save(classes2);
 
     }
 }

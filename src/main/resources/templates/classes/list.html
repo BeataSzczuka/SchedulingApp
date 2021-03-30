@@ -9,7 +9,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-    <title>All teachers</title>
+    <title>All classes</title>
 </head>
 <body>
 <div class="container-fluid" style="margin-top: 20px;">
@@ -17,26 +17,24 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h1 class="panel-title">All Teachers</h1>
+                    <h1 class="panel-title">All Classes</h1>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead class="thead-inverse">
                             <th>ID</th>
-                            <th>FirstName</th>
-                            <th>LastName</th>
+                            <th>Student group name</th>
                             <th>Actions</th>
                             </thead>
-                            <tr th:each="teacher : ${teachers}">
-                                <td th:text="${teacher.id}">-</td>
-                                <td th:text="${teacher.firstName}">-</td>
-                                <td th:text="${teacher.lastName}">-</td>
+                            <tr th:each="classes : ${classes}">
+                                <td th:text="${classes.id}">-</td>
+                                <td th:text="${classes.studentGroup.groupName}">-</td>
                                 <td>
-                                    <a href="#" th:href="@{'/teacher/' + ${teacher.id} + '/show'}" style="margin-right: 5px;">View</a>
-                                    <a href="#" th:href="@{'/teacher/' + ${teacher.id} + '/classes'}" style="margin-right: 5px;">Classes</a>
-                                    <a href="#" th:href="@{'/teacher/' + ${teacher.id} + '/update'}" style="margin-right: 5px;">Update</a>
-                                    <a href="#" th:href="@{'/teacher/' + ${teacher.id} + '/delete'}">Delete <small style="color: #f44;"><i>(not safe)</i></small></a>
+                                    <a href="#" th:href="@{'/classes/' + ${classes.id} + '/show'}" style="margin-right: 5px;">View</a>
+                                    <a href="#" th:href="@{'/classes/' + ${classes.id} + '/teachers'}" style="margin-right: 5px;">Teachers</a>
+                                    <a href="#" th:href="@{'/classes/' + ${classes.id} + '/update'}" style="margin-right: 5px;">Update</a>
+                                    <a href="#" th:href="@{'/classes/' + ${classes.id} + '/delete'}">Delete <small style="color: #f44;"><i>(not safe)</i></small></a>
                                 </td>
                             </tr>
                         </table>
@@ -51,7 +49,7 @@
                 <input onclick='javascript:window.history.back()' value='Back' type='button' class="btn btn-default"/>
             </div>
             <div class="col-md-1 col-md-offset-10">
-                <a href="#" th:href="@{'/teacher/new'}" role="button" class="btn btn-success">Add</a>
+                <a href="#" th:href="@{'/classes/new'}" role="button" class="btn btn-success">Add</a>
             </div>
         </div>
     </div>

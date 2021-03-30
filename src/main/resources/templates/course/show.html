@@ -12,7 +12,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <title th:text="${teacher.firstName + teacher.lastName}">The Teacher details</title>
+    <title th:text="${course.name}">The Course details</title>
 </head>
 <body>
 <div class="container-fluid" style="margin-top: 20px;">
@@ -22,7 +22,7 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title" th:text="${teacher.firstName + ' ' + teacher.lastName}">Teacher name (name here)!</h1>
+                        <h1 class="panel-title" th:text="${course.name}">Course name (name here)!</h1>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -30,11 +30,8 @@
                                 <h5><b>Name:</b></h5>
                             </div>
                             <div class="col-md-5">
-                                <h5 th:text="${teacher.firstName + ' ' + teacher.lastName}">-</h5>
+                                <h5 th:text="${course.name}">-</h5>
                             </div>
-                        </div>
-                        <div class="row">
-                            <a href="#" th:href="@{'/teacher/' + ${teacher.id} + '/classes'}" style="margin-right: 5px;">Classes</a>
                         </div>
                     </div>
                 </div>

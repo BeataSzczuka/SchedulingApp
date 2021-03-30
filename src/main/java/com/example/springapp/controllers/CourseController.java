@@ -1,62 +1,80 @@
 package com.example.springapp.controllers;
 
-import com.example.springapp.api.model.CourseDTO;
-import com.example.springapp.api.model.CourseListDTO;
+import com.example.springapp.commands.CourseCommand;
+import com.example.springapp.converters.CourseCommandToCourseConverter;
 import com.example.springapp.model.Course;
+import com.example.springapp.repositories.ClassesRepository;
 import com.example.springapp.repositories.CourseRepository;
-import com.example.springapp.services.CourseService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/course/")
+import java.util.ArrayList;
+import java.util.Optional;
+
+@Controller
 public class CourseController {
 
-    private final CourseService courseService;
+    private CourseRepository courseRepository;
+    private CourseCommandToCourseConverter courseCommandToCourse;
 
-    public CourseController(CourseService courseService) {
-        this.courseService = courseService;
+    public CourseController(CourseRepository courseRepository, CourseCommandToCourseConverter courseCommandToCourse) {
+        this.courseRepository = courseRepository;
+        this.courseCommandToCourse = courseCommandToCourse;
     }
 
-    @GetMapping("all")
-    public ResponseEntity<CourseListDTO> getAllCourses(){
-        return new ResponseEntity<CourseListDTO>(
-                new CourseListDTO(courseService.getAllCourses()), HttpStatus.OK
-        );
-    }
+    @RequestMapping(value = {"/courses", "/course/list"})
+    public String getCourses(Model model) {
 
-    @GetMapping("{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public CourseDTO getCourseById(@PathVariable Long id){
-        return courseService.getCourseById(id);
+        model.addAttribute("courses", courseRepository.findAll());
+
+        return "course/list";
     }
 
 
-    @GetMapping("findByName")
-    @ResponseStatus(HttpStatus.OK)
-    public CourseListDTO getCourseByName(@RequestParam String name){
-        return new CourseListDTO(courseService.getCourseByName(name));
+    @RequestMapping("/course/{id}/show")
+    public String getCourseDetails(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("course", courseRepository.findById(id).get());
+        return "course/show";
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public CourseDTO createNewCourse(@RequestBody CourseDTO courseDTO){
-        return courseService.createNewCourse(courseDTO);
+    @RequestMapping("/course/{id}/delete")
+    public String deleteCourse(@PathVariable("id") Long id) {
+        try{
+            courseRepository.deleteById(id);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return "redirect:/courses";
     }
 
-    @PutMapping("{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public CourseDTO updateCourse(@PathVariable Long id, @RequestBody CourseDTO courseDTO){
-        return courseService.updateCourse(id, courseDTO);
+    @GetMapping
+    @RequestMapping("/course/new")
+    public String newCourse(Model model){
+        model.addAttribute("course", new CourseCommand());
+        return "course/addedit";
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteCourse(@PathVariable Long id){
-
-        courseService.deleteCourseById(id);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+    @GetMapping
+    @RequestMapping("/course/{id}/update")
+    public String updateCourse(Model model, @PathVariable("id") Long id){
+        try{
+            model.addAttribute("course", courseRepository.findById(id).get());
+            return "course/addedit";
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return "redirect:/courses";
+        }
     }
+
+    @PostMapping("course")
+    public String saveOrUpdate(@ModelAttribute CourseCommand command){
+        Course detachedCourse = courseCommandToCourse.convert(command);
+        if (command.getId() != null) {
+            detachedCourse.setId(command.getId());
+        }
+        Course savedCourse = courseRepository.save(detachedCourse);
+        return "redirect:/course/" + savedCourse.getId() + "/show";
+    }
+
 }

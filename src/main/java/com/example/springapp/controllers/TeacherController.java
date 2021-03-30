@@ -3,6 +3,7 @@ package com.example.springapp.controllers;
 import com.example.springapp.commands.TeacherCommand;
 import com.example.springapp.converters.TeacherCommandToTeacherConverter;
 import com.example.springapp.model.Teacher;
+import com.example.springapp.model.Teacher;
 import com.example.springapp.repositories.ClassesRepository;
 import com.example.springapp.repositories.TeacherRepository;
 import org.springframework.stereotype.Controller;
@@ -39,13 +40,11 @@ public class TeacherController {
 
         if (teacher.isPresent()) {
             model.addAttribute("classes", classesRepository.getAllByTeachersIsContaining(teacher.get()));
-      //      model.addAttribute("filter", "teacher: " + teacher.get().getFirstName() + " " + teacher.get().getLastName());
         } else {
             model.addAttribute("classes", new ArrayList<>());
-            model.addAttribute("filter", "teacher for this id doesn't exist");
         }
 
-        return "song/list";
+        return "classes/list";
     }
 
     @RequestMapping("/teacher/{id}/show")
@@ -56,7 +55,11 @@ public class TeacherController {
 
     @RequestMapping("/teacher/{id}/delete")
     public String deleteTeacher(@PathVariable("id") Long id) {
-        teacherRepository.deleteById(id);
+        try{
+            teacherRepository.deleteById(id);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
         return "redirect:/teachers";
     }
 
@@ -67,19 +70,31 @@ public class TeacherController {
         return "teacher/addedit";
     }
 
+    @GetMapping
+    @RequestMapping("/teacher/{id}/update")
+    public String updateCourse(Model model, @PathVariable("id") Long id){
+        try{
+            model.addAttribute("teacher", teacherRepository.findById(id).get());
+            return "teacher/addedit";
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return "redirect:/teachers";
+        }
+    }
+
     @PostMapping("teacher")
     public String saveOrUpdate(@ModelAttribute TeacherCommand command){
-   //     Optional<Teacher> teacherOptional = teacherRepository.getFirstByFirstNameAndLastName(command.getFirstName(), command.getLastName());
-//
-//        if (!teacherOptional.isPresent()) {
-//            Teacher detachedTeacher = teacherCommandToTeacher.convert(command);
-//            Teacher savedTeacher = teacherRepository.save(detachedTeacher);
-//            return "redirect:/teacher/" + savedTeacher.getId() + "/show";
-//        } else {
-//            System.out.println("Sorry, there's such teacher in db");
-//            return "redirect:/teacher/" + teacherOptional.get().getId() + "/show";
-//        }
-        return "redirect:/teacher/list";
+        try{
+            Teacher detachedTeacher = teacherCommandToTeacher.convert(command);
+            if (command.getId() != null) {
+                detachedTeacher.setId(command.getId());
+            }
+            Teacher savedTeacher = teacherRepository.save(detachedTeacher);
+            return "redirect:/teacher/" + savedTeacher.getId() + "/show";
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return "redirect:/teachers";
+        }
     }
 
 }

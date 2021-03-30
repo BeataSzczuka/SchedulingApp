@@ -12,7 +12,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <title th:text="${teacher.firstName + teacher.lastName}">The Teacher details</title>
+    <title>The Classes details</title>
 </head>
 <body>
 <div class="container-fluid" style="margin-top: 20px;">
@@ -22,19 +22,43 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title" th:text="${teacher.firstName + ' ' + teacher.lastName}">Teacher name (name here)!</h1>
+                        <h1 class="panel-title">Classes details</h1>
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-2">
-                                <h5><b>Name:</b></h5>
+                                <h5><b>Group name:</b></h5>
                             </div>
                             <div class="col-md-5">
-                                <h5 th:text="${teacher.firstName + ' ' + teacher.lastName}">-</h5>
+                                <h5 th:text="${classes.studentGroup.groupName}">-</h5>
                             </div>
                         </div>
                         <div class="row">
-                            <a href="#" th:href="@{'/teacher/' + ${teacher.id} + '/classes'}" style="margin-right: 5px;">Classes</a>
+                            <div class="col-md-2">
+                                <h5><b>Start time:</b></h5>
+                            </div>
+                            <div class="col-md-5">
+                                <h5 th:text="${classes.startTime}">-</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h5><b>End time:</b></h5>
+                            </div>
+                            <div class="col-md-5">
+                                <h5 th:text="${classes.endTime}">-</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h5><b>Room:</b></h5>
+                            </div>
+                            <div class="col-md-5">
+                                <h5 th:text="${classes.room}">-</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a href="#" th:href="@{'/classes/' + ${classes.id} + '/teacher'}" style="margin-right: 5px;">Teachers</a>
                         </div>
                     </div>
                 </div>
